@@ -1,0 +1,217 @@
+HADOOP INSTALLATION ON WSL (UBUNTU) - D DRIVE SETUP
+
+
+OVERVIEW
+This document describes the step-by-step installation and configuration of Apache Hadoop 3.3.6 in pseudo-distributed mode on WSL (Ubuntu) using the D drive for storage.
+The setup creates a single-node Hadoop cluster where NameNode, DataNode, and SecondaryNameNode run locally.
+
+
+Step 1 - Install WSL & Ubuntu
+
+Purpose:
+WSL (Windows Subsystem for Linux) allows running Linux inside Windows. 
+Hadoop runs best on Linux, so Ubuntu is required.
+
+Expected Output:
+Ubuntu terminal opens successfully and shows: username@hostname:~$
+
+
+Step 2 - Install Java 8
+
+Purpose:
+Hadoop is written in Java. 
+These commands update the system and install Java so Hadoop services can run.
+
+apt update -> refresh package list
+apt upgrade -> update installed packages
+apt install openjdk-8-jdk -> installs Java 8
+java -version -> verifies Java installation
+
+Commands:
+sudo apt update && sudo apt upgrade -y
+sudo apt install openjdk-8-jdk -y
+java -version
+
+Expected Output:
+openjdk version "1.8.0_xxx"
+OpenJDK Runtime Environment
+OpenJDK 64-Bit Server VM
+
+
+Step 3 - Download Hadoop
+
+Purpose:
+Downloads Hadoop software from Apache website using wget.
+
+Commands:
+cd ~
+wget https://downloads.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz
+ls
+
+Expected Output:
+hadoop-3.3.6.tar.gz
+
+
+Step 4 - Extract Hadoop to D Drive
+
+Purpose:
+Moves Hadoop archive to D drive, extracts it, renames the folder, and sets proper permissions.
+
+mv -> moves file
+tar -xvzf -> extracts compressed file
+chown -> gives ownership to current user
+
+Commands:
+mv ~/hadoop-3.3.6.tar.gz /mnt/d/
+cd /mnt/d
+tar -xvzf hadoop-3.3.6.tar.gz
+mv hadoop-3.3.6 hadoop
+sudo chown -R $USER:$USER /mnt/d/hadoop
+
+Expected Output:
+bash: ls /mnt/d
+
+hadoop
+hadoop-3.3.6.tar.gz
+
+
+Step 5 - Create HDFS Storage Directories
+
+Purpose:
+Creates directories where Hadoop stores metadata and actual data.
+
+NameNode -> metadata storage
+DataNode -> actual data blocks
+
+Commands:
+sudo rm -rf /mnt/d/hadoop/data
+mkdir -p /mnt/d/hadoop/data/namenode
+mkdir -p /mnt/d/hadoop/data/datanode
+
+Expected Output:
+bash: ls /mnt/d/hadoop/data
+
+namenode
+datanode
+
+
+Step 6 - Configure Hadoop
+
+Purpose:
+Configure Hadoop filesystem, replication, and storage paths using XML files.
+
+Commands:
+nano /mnt/d/hadoop/etc/hadoop/core-site.xml
+nano /mnt/d/hadoop/etc/hadoop/hdfs-site.xml
+
+Expected Output:
+Files saved successfully (no terminal output).
+
+
+Step 7 - Format NameNode
+
+Purpose:
+Initializes HDFS filesystem and prepares metadata storage.
+
+Commands:
+hdfs namenode -format
+
+Expected Output:
+Storage directory ... has been successfully formatted
+
+
+Step 8 - Set Hadoop Environment Variables
+
+Purpose:
+Defines Java and Hadoop paths so system can locate binaries and run Hadoop commands.
+
+Commands:
+nano ~/.bashrc
+source ~/.bashrc
+hadoop version
+
+(Add inside .bashrc)
+
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export HADOOP_HOME=/mnt/d/hadoop
+export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+
+Expected Output:
+Hadoop 3.3.6
+
+
+Step 9 - Install & Start SSH
+
+Purpose:
+Hadoop uses SSH to start services automatically, even on the same machine.
+
+Commands:
+sudo apt install -y openssh-server
+sudo service ssh start
+sudo service ssh status
+
+Expected Output:
+Active: active (running)
+
+
+Step 10 - Enable Passwordless SSH
+
+Purpose:
+Allows Hadoop to connect to localhost automatically without password.
+
+Commands:
+ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+ssh localhost
+exit
+
+Expected Output:
+SSH login without password:
+username@hostname:~$
+
+
+Step 11 - Start HDFS
+
+Purpose:
+Starts Hadoop Distributed File System services.
+
+Commands:
+start-dfs.sh
+
+Expected Output:
+Starting namenodes
+Starting datanodes
+Starting secondary namenodes
+
+
+Step 12 - Verify Hadoop
+
+Purpose:
+Check if Hadoop services are running.
+
+Commands:
+jps
+
+Expected Output:
+NameNode
+DataNode
+SecondaryNameNode
+Jps
+
+step 13 - Hadoop Web UI
+
+Purpose:
+Monitor HDFS cluster status and storage usage.
+
+URL
+http://localhost:9870
+
+Expected Output:
+HDFS dashboard showing:
+Live Nodes = 1
+Storage usage
+Cluster status = Healthy
+
+Final Result:
+Hadoop single-node cluster successfully installed and running on WSL.
