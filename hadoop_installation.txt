@@ -12,7 +12,7 @@ Purpose:
 WSL (Windows Subsystem for Linux) allows running Linux inside Windows. 
 Hadoop runs best on Linux, so Ubuntu is required.
 
-Expected Output:
+Output:
 Ubuntu terminal opens successfully and shows: username@hostname:~$
 
 
@@ -32,7 +32,7 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install openjdk-8-jdk -y
 java -version
 
-Expected Output:
+Output:
 openjdk version "1.8.0_xxx"
 OpenJDK Runtime Environment
 OpenJDK 64-Bit Server VM
@@ -48,7 +48,7 @@ cd ~
 wget https://downloads.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz
 ls
 
-Expected Output:
+Output:
 hadoop-3.3.6.tar.gz
 
 
@@ -68,7 +68,7 @@ tar -xvzf hadoop-3.3.6.tar.gz
 mv hadoop-3.3.6 hadoop
 sudo chown -R $USER:$USER /mnt/d/hadoop
 
-Expected Output:
+Output:
 bash: ls /mnt/d
 
 hadoop
@@ -88,7 +88,7 @@ sudo rm -rf /mnt/d/hadoop/data
 mkdir -p /mnt/d/hadoop/data/namenode
 mkdir -p /mnt/d/hadoop/data/datanode
 
-Expected Output:
+Output:
 bash: ls /mnt/d/hadoop/data
 
 namenode
@@ -104,8 +104,8 @@ Commands:
 nano /mnt/d/hadoop/etc/hadoop/core-site.xml
 nano /mnt/d/hadoop/etc/hadoop/hdfs-site.xml
 
-Expected Output:
-Files saved successfully (no terminal output).
+Output:
+Files saved successfully (no terminal ).
 
 
 Step 7 - Format NameNode
@@ -116,7 +116,7 @@ Initializes HDFS filesystem and prepares metadata storage.
 Commands:
 hdfs namenode -format
 
-Expected Output:
+Output:
 Storage directory ... has been successfully formatted
 
 
@@ -136,7 +136,7 @@ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 export HADOOP_HOME=/mnt/d/hadoop
 export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 
-Expected Output:
+Output:
 Hadoop 3.3.6
 
 
@@ -150,7 +150,7 @@ sudo apt install -y openssh-server
 sudo service ssh start
 sudo service ssh status
 
-Expected Output:
+Output:
 Active: active (running)
 
 
@@ -166,7 +166,7 @@ chmod 600 ~/.ssh/authorized_keys
 ssh localhost
 exit
 
-Expected Output:
+Output:
 SSH login without password:
 username@hostname:~$
 
@@ -179,7 +179,7 @@ Starts Hadoop Distributed File System services.
 Commands:
 start-dfs.sh
 
-Expected Output:
+Output:
 Starting namenodes
 Starting datanodes
 Starting secondary namenodes
@@ -193,7 +193,7 @@ Check if Hadoop services are running.
 Commands:
 jps
 
-Expected Output:
+Output:
 NameNode
 DataNode
 SecondaryNameNode
@@ -207,7 +207,7 @@ Monitor HDFS cluster status and storage usage.
 URL
 http://localhost:9870
 
-Expected Output:
+Output:
 HDFS dashboard showing:
 Live Nodes = 1
 Storage usage
