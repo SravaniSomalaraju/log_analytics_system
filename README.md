@@ -1,4 +1,4 @@
-                                  #Log Analytics System using Hadoop
+#Log Analytics System using Hadoop
 ##Project Overview
 
 This project implements a log analytics system using Hadoop to process large-scale web access logs. The objective is to evaluate Hadoop’s scalability, fault tolerance, and distributed processing capabilities through batch processing of log data.
