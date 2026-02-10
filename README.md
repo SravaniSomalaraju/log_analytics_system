@@ -16,7 +16,7 @@ This project implements a distributed log analytics system using Hadoop to proce
 - Git & GitHub
 
 ## Project Structure
-'''
+```
 log_analytics_system/
 │
 ├── source/
@@ -37,7 +37,7 @@ log_analytics_system/
 ├── .gitignore
 ├── project_notes.txt
 └── README.md
-'''
+```
 
 ## Phase 1 - Hadoop Environment Setup
 
