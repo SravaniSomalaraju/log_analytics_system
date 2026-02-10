@@ -18,7 +18,7 @@ Scalability Issues:-
 Poor Resource Utilization:-
 -Only MapReduce supported -> cannot run other processing frameworks.
 Limited Cluster Size:-
--Not suitable for very large distributed systems.
+#-Not suitable for very large distributed systems.
 
 
 Hadoop 2.x Architecture (Introduction of YARN)
@@ -77,99 +77,90 @@ When log volume increases, Hadoop performance may degrade due to improper config
 
 1. HDFS Block Management
 
-Important Configuration File:
-hdfs-site.xml
+Configuration Files:
+- core-site.xml → General Hadoop settings (filesystem, I/O)
+- hdfs-site.xml → HDFS storage and block management
+- mapred-site.xml → MapReduce execution and memory
+- yarn-site.xml → Resource allocation and scheduling
 
 Critical Properties:
 
+File: hdfs-site.xml:-
 dfs.blocksize:-
-Purpose: Defines size of each HDFS block (default 128 MB)
+Defines size of each HDFS block (default = 128 MB)
 Recommendation:
 Keep block size 128 MB or increase to 256 MB for very large files
 Impact:
-Larger block -> fewer blocks -> less metadata overhead
+Larger block -> fewer blocks -> less metadata load on NameNode
 Improves sequential read performance
-Too large -> reduces parallelism
+Too large -> reduces parallel processing
 
 dfs.replication:-
-Purpose: Number of block copies (default = 3)
-Recommendation (Local cluster): Set to 1
+Number of copies of each block (default = 3)
+Recommendation (single node): Set to 1
 Impact:
-Lower replication -> less disk usage -> faster write
+Lower replication -> less storage usage , faster write
 Higher replication -> better fault tolerance but more storage
 
 dfs.namenode.handler.count
-Purpose: Controls number of threads handling HDFS requests
+Number of threads handling HDFS requests
 Recommendation: Increase if many concurrent operations
 Impact:
-Improves request handling
+Handles more concurrent requests
 Reduces NameNode bottleneck
 
 2. MapReduce Execution
 
-Important Configuration File
-mapred-site.xml
-
-Critical Properties:-
+File: mapred-site.xml
 
 mapreduce.map.memory.mb
-Purpose: Memory allocated per mapper
+Memory for each mapper
 Recommendation: Increase based on system RAM (e.g., 1024 -> 2048)
 Impact:
 Prevents mapper failures
 Improves processing of large records
 
 mapreduce.reduce.memory.mb
-Purpose: Memory per reducer
+Memory per each reducer
 Recommendation: Increase for heavy aggregation jobs
 Impact:
 Faster reduce phase
 Prevents out-of-memory errors
 
 mapreduce.task.io.sort.mb
-Purpose: Buffer size for map output before disk write
+Buffer size for map output before disk write
 Recommendation: Increase (e.g., 100 -> 256)
 Impact:
 Reduces disk I/O
 Improves shuffle performance
 
 3. YARN Resource Allocation
+File: yarn-site.xml
 
-Important Configuration File
-yarn-site.xml
-
-Critical Properties:
 yarn.nodemanager.resource.memory-mb
-Purpose: Total memory available for containers on each node
+Total memory available for containers on each node
 Recommendation: Set close to system RAM (leave some for OS)
 Impact:
 More containers can run
 Better resource utilization
 
 yarn.scheduler.maximum-allocation-mb
-Purpose: Max memory for a single container
+Max memory for a single container
 Recommendation: Increase for large jobs
 Impact:
 Allows memory-intensive tasks
 Prevents container rejection
 
 yarn.nodemanager.resource.cpu-vcores
-Purpose: CPU cores available to YARN
+CPU cores available to YARN
 Recommendation: Match system CPU cores
 Impact:
 Enables more parallel tasks
 Improves throughput
 
 
-Impact on Performance
-
-Improved Job Execution
-Better memory allocation -> fewer failures
-Reduced disk I/O -> faster shuffle
-Larger blocks -> efficient read/write
-Better Resource Utilization
-CPU and memory used efficiently
-More parallel tasks executed
-Reduced Bottlenecks
-NameNode handles more requests
-YARN schedules resources efficiently
+Impact on Job Execution and Resource Usage
+- Faster job execution due to better memory and reduced disk I/O
+- Improved parallelism from optimized block size and CPU allocation
+- Better resource utilization (CPU, memory, disk)
+- Reduced bottlenecks at NameNode and during shuffle phase
