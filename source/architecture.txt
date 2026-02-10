@@ -1,0 +1,67 @@
+Phase 6 - Hadoop Architecture Evolution Study
+
+Task 7 - Architecture Comparison
+
+Hadoop 1.x Architecture
+
+Components:
+NameNode -> Stores metadata
+DataNode -> Stores actual data blocks
+JobTracker -> Handles job scheduling + resource management
+TaskTracker -> Executes map and reduce tasks
+
+JobTracker & TaskTracker Limitations:
+Single Point of Failure:-
+-If JobTracker fails -> entire cluster stops.
+Scalability Issues:-
+-JobTracker manages both resource allocation and job scheduling → becomes bottleneck in large clusters.
+Poor Resource Utilization:-
+-Only MapReduce supported -> cannot run other processing frameworks.
+Limited Cluster Size:-
+-Not suitable for very large distributed systems.
+
+
+Hadoop 2.x Architecture (Introduction of YARN)
+Hadoop 2.x introduced YARN (Yet Another Resource Negotiator) to overcome Hadoop 1.x limitations.
+
+YARN separates:
+Resource management
+Job execution
+
+ResourceManager:
+-Global cluster resource manager
+-Allocates resources to applications
+-Performs scheduling
+NodeManager:
+-Runs on each node
+-Manages containers and resources
+-Executes tasks
+-Reports node status
+
+ApplicationMaster:
+-Created per application/job
+-Negotiates resources from ResourceManager
+-Manages execution of that specific job
+
+Improvements over Hadoop 1.x:
+-Removed JobTracker bottleneck
+-Better scalability
+-Multiple processing engines supported (MapReduce, Spark, Tez, etc.)
+-Improved resource utilization
+-Better fault tolerance
+
+Hadoop 3.x Architecture (Modern Enhancements)
+Hadoop 3.x builds on YARN with major improvements.
+
+Key Enhancements:
+High Availability (HA):
+-Multiple NameNodes -> Active + Standby
+-Automatic failover -> no single point of failure
+Improved Scalability:
+-Supports very large clusters
+-Better resource scheduling and container management
+Erasure Coding:
+-Reduces storage overhead compared to replication
+-More efficient storage utilization
+Multiple Resource Types:
+-Supports CPU, memory, GPU scheduling
