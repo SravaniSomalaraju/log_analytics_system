@@ -28,18 +28,18 @@ log_analytics_system/
 │   ├── setup.sh
 │   ├── small_log_file.sh
 │   ├── start_hadoop.sh
-│   └── word_count.sh
+│   |── word_count.sh
 │
 ├── custom_mapreduce/
 │   ├── error_mapper.py
 │   ├── mapper.py
 │   ├── reducer.py
 │   ├── phase4_run_streaming.sh
-│   └── phase5_run_streaming.sh
+│   |── phase5_run_streaming.sh
 │
 ├── .gitignore
 ├── project_notes.txt
-└── README.md
+|── README.md
 
 ##Phase 1 — Hadoop Environment Setup
 Configured a pseudo-distributed Hadoop cluster and verified:
