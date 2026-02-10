@@ -46,9 +46,11 @@ Configured a pseudo-distributed Hadoop cluster and verified:
 - YARN running
 - MapReduce execution successful
 - Hadoop Web UI accessible
+```
 Scripts used:
 source/setup.sh
 source/start_hadoop.sh
+```
 
 
 ## Phase 2 — Log Ingestion and Block Analysis
@@ -56,13 +58,17 @@ source/start_hadoop.sh
 - Uploaded log file to HDFS
 - Observed block allocation behavior
 - Identified inefficiency of small files
+```
 Script:
 source/small_log_file.sh
+```
 ### Large Log File Scalability
 - Generated large log file (~GB size)
 - Verified block splitting based on 128 MB block size
+```
 Script:
 source/large_log_file.sh
+```
 
 ## Phase 3 — Built-in MapReduce WordCount
 Executed Hadoop WordCount using log data stored in HDFS.
@@ -72,10 +78,12 @@ Key Observation:
 
 ## Phase 4 — Python WordCount using Hadoop Streaming
 Implemented distributed WordCount using Python mapper and reducer.
+```
 Scripts:
 custom_mapreduce/mapper.py
 custom_mapreduce/reducer.py
 custom_mapreduce/phase4_run_streaming.sh
+```
 
 Comparison:
 - Built-in WordCount faster
@@ -83,10 +91,12 @@ Comparison:
 
 ## Phase 5 — Error-Focused Log Analysis
 Filtered logs where HTTP status ≥ 400 and computed error frequency.
+```
 Scripts:
 custom_mapreduce/error_mapper.py
 custom_mapreduce/phase5_run_streaming.sh
 custom_mapreduce/reducer.py
+```
 
 Result:
 - Frequency of error status codes
@@ -94,9 +104,10 @@ Result:
 
 ## Phase 6 — Hadoop Architecture Study
 Documented evolution of Hadoop architecture (1.x → 3.x).
+```
 File:
 source/architecture.txt
-
+```
 Key Topics:
 - JobTracker vs TaskTracker limitations
 - Introduction of YARN
